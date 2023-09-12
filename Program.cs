@@ -1,7 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using DesafioDotNET.Data;
+using DesafioDotNET.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var SQLConfiguration = new SQLServerConfiguration(builder.Configuration.GetConnectionString("LocalServer"));
+builder.Services.AddSingleton(SQLConfiguration);
+
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
 
 var app = builder.Build();
 
